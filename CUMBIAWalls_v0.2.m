@@ -14,23 +14,23 @@ clc; clear; close all; format long
 
 % input data:
 
-name = 'WSH3';      %identifies actual work, the output file will be name.xls
-interaction = 'n';  % if you want to also perform an axial load - moment interaction
+name = 'wall';      %identifies actual work, the output file will be name.xls
+interaction = 'y';  % if you want to also perform an axial load - moment interaction
                     % analysis type 'y', otherwise type 'n'
 
 
 % section properties:
 
-H    = 2000;                              % wall length (mm)- perp to x
-B    = 150;                               % wall thickness  (mm)- perp to y
-clb  = 24;                                % cover to longitudinal bars (mm)
+H    = 400;                              % wall length (mm)- perp to x
+B    = 200;                               % wall thickness  (mm)- perp to y
+clb  = 35;                                % cover to longitudinal bars (mm)
 
 % member properties
 
-L  = 4560;                       % Wall height (mm)
+L  = 2700;                       % Wall height (mm)
                                  % effective height for single bending wall (usually 0.7 times the full height
                                  %full height for double bending walls
-hn = 4560;                       % clear height to the next floor above the critical section
+hn = 2900;                       % clear height to the next floor above the critical section
 
 bending = 'single';              % single or double
 reinforcement = 'doubly';        % singly or doubly
@@ -39,23 +39,9 @@ reinforcement = 'doubly';        % singly or doubly
 % [distance from the top to bar center (mm) - # of bars - bar diameter (mm)] each row
 % corresponds to a layer of reinforcement:
 
-MLR=[30    2  12
-     130   2  12
-     230   2  12
-     355   2  8
-     480   2  8
-     605   2  8
-     730   2  8
-     855   2  8
-     1000  2  8
-     1145  2  8
-     1270  2  8
-     1395  2  8
-     1520  2  8
-     1645  2  8
-     1770  2  12
-     1870  2  12
-     1970  2  12];
+MLR=[50    2  12
+     200   2  12
+     350   2  12];
 
 % Boundary element details (reinforcement must be symmetric, as the code is)
 
@@ -78,7 +64,7 @@ ns      = 2;                                   % # legs shear reinforcement
 
 % applieed loads:
 
-P      = 686;               % axial load kN (-) tension (+)compression
+P      = 100;               % axial load kN (-) tension (+)compression
 
 % material models (input the 'name' of the file with the stress-strain relationship
 % to use the default models: Mander model for confined or unconfined  concrete type 'mc' or 'mu'.
@@ -89,7 +75,7 @@ unconfined = 'mu';
 rebar      = 'ks';
 
 
-wi   = [88 88 88 88 78 78];                       % vector with clear distances between
+wi   = [76 76 76];                       % vector with clear distances between
                                                   % periferical longitudinal bars properly
                                                   % restrained 
 % material properties 
@@ -102,8 +88,8 @@ eco     = 0.002;             % unconfined strain (usually 0.002 for normal weigh
 esm     = 0.06;              % max transv. steel strain (<0.06)*
 espall  = 0.0064;            % max uncon. conc. strain (usually 0.0064)
 
-fy      = 601;               % long steel yielding stress (MPa)
-fyh     = 489;               % transverse steel yielding stress (MPa)
+fy      = 500;               % long steel yielding stress (MPa)
+fyh     = 300;               % transverse steel yielding stress (MPa)
 fys     = 489;               % shear steel yielding stress (MPa)
 Es      = 200000;            % steel modulus of elasticity
 fsu     = 725.5;             % long steel max stress (MPa)*
@@ -1326,5 +1312,6 @@ fprintf(fid, '(1/3)PB:  %6.1f kN    (1/3)MB:  %6.1f kN-m\n',PB13/1000,MB13);
 fprintf(fid, '(2/3)PB:  %6.1f kN   (2/3)MB:  %6.1f kN-m\n',PB23/1000,MB23);
 
 fclose(fid);
+
 
 
